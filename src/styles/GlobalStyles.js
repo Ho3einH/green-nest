@@ -73,6 +73,7 @@ html {
 
 body {
   font-family: "Poppins", sans-serif;
+  font-family: "Vazirmatn", sans-serif;
   color: var(--color-grey-700);
   direction: rtl;
   transition: color 0.3s, background-color 0.3s;
@@ -80,6 +81,7 @@ body {
   line-height: 1.5;
   font-size: 1.6rem;
 }
+
 
 input,
 button,
