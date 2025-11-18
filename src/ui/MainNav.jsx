@@ -1,31 +1,43 @@
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
+import {
+  HiOutlineCalendarDays,
+  HiOutlineCog,
+  HiOutlineHome,
+  HiOutlineHomeModern,
+  HiOutlineUsers,
+} from "react-icons/hi2";
 
 const data = [
   {
     id: 1,
     name: "خانه",
     page: "dashboard",
+    icon: <HiOutlineHome />,
   },
   {
     id: 2,
     name: "رزرو ها",
     page: "bookings",
+    icon: <HiOutlineCalendarDays />,
   },
   {
     id: 3,
     name: "اتاق ها",
     page: "cabins",
+    icon: <HiOutlineHomeModern />,
   },
   {
     id: 4,
     name: "کاربران",
     page: "users",
+    icon: <HiOutlineUsers />,
   },
   {
     id: 5,
     name: "تنظیمات",
     page: "settings",
+    icon: <HiOutlineCog />,
   },
 ];
 
@@ -81,7 +93,8 @@ function MainNav() {
         {data.map((item) => (
           <li>
             <StyledNavLink key={item.id} to={item.page}>
-              {item.name}
+              {item.icon}
+              <span>{item.name}</span>
             </StyledNavLink>
           </li>
         ))}
