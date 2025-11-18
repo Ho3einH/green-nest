@@ -7,6 +7,9 @@ import {
   HiOutlineHomeModern,
   HiOutlineUsers,
 } from "react-icons/hi2";
+import { GiWoodCabin } from "react-icons/gi";
+import { GiCog, GiPokecog } from "react-icons/gi";
+import { FaUsers } from "react-icons/fa";
 
 const data = [
   {
@@ -25,19 +28,19 @@ const data = [
     id: 3,
     name: "اتاق ها",
     page: "cabins",
-    icon: <HiOutlineHomeModern />,
+    icon: <GiWoodCabin />,
   },
   {
     id: 4,
     name: "کاربران",
     page: "users",
-    icon: <HiOutlineUsers />,
+    icon: <FaUsers />,
   },
   {
     id: 5,
     name: "تنظیمات",
     page: "settings",
-    icon: <HiOutlineCog />,
+    icon: <GiCog />,
   },
 ];
 
