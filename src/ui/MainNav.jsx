@@ -8,7 +8,7 @@ import {
   HiOutlineUsers,
 } from "react-icons/hi2";
 import { GiWoodCabin } from "react-icons/gi";
-import { GiCog, GiPokecog } from "react-icons/gi";
+import { GiCog } from "react-icons/gi";
 import { FaUsers } from "react-icons/fa";
 
 const data = [
