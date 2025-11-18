@@ -1,4 +1,33 @@
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
+
+const data = [
+  {
+    id: 1,
+    name: "خانه",
+    page: "dashboard",
+  },
+  {
+    id: 2,
+    name: "رزرو ها",
+    page: "bookings",
+  },
+  {
+    id: 3,
+    name: "اتاق ها",
+    page: "cabins",
+  },
+  {
+    id: 4,
+    name: "کاربران",
+    page: "users",
+  },
+  {
+    id: 5,
+    name: "تنظیمات",
+    page: "settings",
+  },
+];
 
 const NavList = styled.ul`
   display: flex;
@@ -6,7 +35,7 @@ const NavList = styled.ul`
   gap: 0.8rem;
 `;
 
-const Link = styled.a`
+const StyledNavLink = styled(NavLink)`
   &:link,
   &:visited {
     display: flex;
@@ -44,3 +73,21 @@ const Link = styled.a`
     color: var(--color-brand-600);
   }
 `;
+
+function MainNav() {
+  return (
+    <nav>
+      <NavList>
+        {data.map((item) => (
+          <li>
+            <StyledNavLink key={item.id} to={item.page}>
+              {item.name}
+            </StyledNavLink>
+          </li>
+        ))}
+      </NavList>
+    </nav>
+  );
+}
+
+export default MainNav;
