@@ -93,7 +93,7 @@ function MainNav() {
     <nav>
       <NavList>
         {data.map((item) => (
-          <li>
+          <li key={item.id}>
             <StyledNavLink key={item.id} to={item.page}>
               {item.icon}
               <span>{item.name}</span>
