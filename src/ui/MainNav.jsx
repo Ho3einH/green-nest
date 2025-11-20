@@ -1,46 +1,45 @@
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import {
-  HiOutlineCalendarDays,
-  HiOutlineCog,
-  HiOutlineHome,
-  HiOutlineHomeModern,
-  HiOutlineUsers,
+  HiCalendarDays,
+  HiCog,
+  HiHome,
+  HiHomeModern,
+  HiUserGroup,
+  HiUsers,
+  HiMiniCog,
 } from "react-icons/hi2";
-import { GiWoodCabin } from "react-icons/gi";
-import { GiCog } from "react-icons/gi";
-import { FaUsers } from "react-icons/fa";
 
 const data = [
   {
     id: 1,
     name: "خانه",
     page: "dashboard",
-    icon: <HiOutlineHome />,
+    icon: <HiHome />,
   },
   {
     id: 2,
     name: "رزرو ها",
     page: "bookings",
-    icon: <HiOutlineCalendarDays />,
+    icon: <HiCalendarDays />,
   },
   {
     id: 3,
     name: "اتاق ها",
     page: "cabins",
-    icon: <GiWoodCabin />,
+    icon: <HiHomeModern />,
   },
   {
     id: 4,
     name: "کاربران",
     page: "users",
-    icon: <FaUsers />,
+    icon: <HiUserGroup />,
   },
   {
     id: 5,
     name: "تنظیمات",
     page: "settings",
-    icon: <GiCog />,
+    icon: <HiMiniCog />,
   },
 ];
 
@@ -85,7 +84,7 @@ const StyledNavLink = styled(NavLink)`
   &:active svg,
   &.active:link svg,
   &.active:visited svg {
-    color: var(--color-brand-600);
+    color: #3e5033;
   }
 `;
 
