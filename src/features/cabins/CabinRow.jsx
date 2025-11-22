@@ -1,4 +1,5 @@
 import styled from "styled-components";
+// import { formatCurrency } from "../../utils/helpers";
 
 const TableRow = styled.div`
   display: grid;
@@ -18,7 +19,7 @@ const Img = styled.img`
   aspect-ratio: 3 / 2;
   object-fit: cover;
   object-position: center;
-  transform: scale(1.5) translateX(-7px);
+  transform: scale(1.5) translateX(+7px);
 `;
 
 const Cabin = styled.div`
@@ -38,3 +39,22 @@ const Discount = styled.div`
   font-weight: 500;
   color: var(--color-green-700);
 `;
+
+function CabinRow({ cabin }) {
+  const { image, name, maxCapacity, discount, regularPrice } = cabin;
+
+  return (
+    <TableRow>
+      <Img src={image} alt="" />
+      <Cabin>{name}</Cabin>
+      <div>حداکثر ظرفیت {maxCapacity} نفر</div>
+      <Price>{regularPrice}</Price>
+      <Discount>{discount}</Discount>
+      <button>Delete</button>
+      {/* <Price>{formatCurrency(regularPrice)}</Price> */}
+      {/* <Discount>{formatCurrency(discount)}</Discount> */}
+    </TableRow>
+  );
+}
+
+export default CabinRow;
