@@ -53,22 +53,22 @@ function CreateCabinForm() {
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <FormRow>
-        <Label htmlFor="name">Cabin name</Label>
+        <Label htmlFor="name">شماره اتاق</Label>
         <Input type="text" id="name" {...register("name")} />
       </FormRow>
 
       <FormRow>
-        <Label htmlFor="maxCapacity">Maximum capacity</Label>
+        <Label htmlFor="maxCapacity">نهایت ظرفیت</Label>
         <Input type="number" id="maxCapacity" {...register("maxCapacity")} />
       </FormRow>
 
       <FormRow>
-        <Label htmlFor="regularPrice">Regular price</Label>
+        <Label htmlFor="regularPrice">قیمت معمول</Label>
         <Input type="number" id="regularPrice" {...register("regularPrice")} />
       </FormRow>
 
       <FormRow>
-        <Label htmlFor="discount">Discount</Label>
+        <Label htmlFor="discount">تخفیف</Label>
         <Input
           type="number"
           id="discount"
@@ -78,7 +78,7 @@ function CreateCabinForm() {
       </FormRow>
 
       <FormRow>
-        <Label htmlFor="description">Description for website</Label>
+        <Label htmlFor="description">توضیحات</Label>
         <Textarea
           type="number"
           id="description"
@@ -88,13 +88,13 @@ function CreateCabinForm() {
       </FormRow>
 
       <FormRow>
-        <Label htmlFor="image">Cabin photo</Label>
+        <Label htmlFor="image">عکس اتاق</Label>
         <FileInput id="image" accept="image/*" />
       </FormRow>
 
       <FormRow>
         {/* type is an HTML attribute! */}
-        <Button variation="secondary" type="reset">
+        <Button $variation="secondary" type="reset">
           لغو
         </Button>
         <Button>اضافه کردن کابین</Button>
