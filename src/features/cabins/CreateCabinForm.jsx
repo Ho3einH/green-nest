@@ -9,8 +9,9 @@ import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createCabin } from "../../services/apiCabins";
 import toast from "react-hot-toast";
+import FormRow from "../../ui/FormRow";
 
-const FormRow = styled.div`
+const FormRow2 = styled.div`
   display: grid;
   align-items: center;
   grid-template-columns: 24rem 1fr 1.2fr;
@@ -47,9 +48,9 @@ const Error = styled.span`
 `;
 
 function CreateCabinForm() {
-  const { register, handleSubmit, reset } = useForm();
-
+  const { register, handleSubmit, reset, getValues, formState } = useForm();
   const queryClient = useQueryClient();
+  const { errors } = formState;
 
   const { isPending: isCreating, mutate } = useMutation({
     mutationFn: createCabin,
@@ -67,45 +68,75 @@ function CreateCabinForm() {
     mutate(data);
   }
 
+  function onError(errors) {
+    console.log(errors);
+  }
+
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
-      <FormRow>
-        <Label htmlFor="name">شماره اتاق</Label>
-        <Input type="text" id="name" {...register("name")} />
+    <Form onSubmit={handleSubmit(onSubmit, onError)}>
+      <FormRow label="شماره اتاق" error={errors?.name?.message}>
+        <Input
+          type="text"
+          id="name"
+          disabled={isCreating}
+          {...register("name", { required: "این فیلد الزامی است" })}
+        />
       </FormRow>
 
-      <FormRow>
-        <Label htmlFor="maxCapacity">نهایت ظرفیت</Label>
-        <Input type="number" id="maxCapacity" {...register("maxCapacity")} />
+      <FormRow label="نهایت ظرفیت" error={errors?.maxCapacity?.message}>
+        <Input
+          type="number"
+          id="maxCapacity"
+          disabled={isCreating}
+          {...register("maxCapacity", {
+            valueAsNumber: true,
+            required: "این فیلد الزامی است",
+            min: { value: 1, message: "مقدار ظرفیت حداقل باید 1 باشد" },
+          })}
+        />
       </FormRow>
 
-      <FormRow>
-        <Label htmlFor="regularPrice">قیمت معمول</Label>
-        <Input type="number" id="regularPrice" {...register("regularPrice")} />
+      <FormRow label="قیمت پایه" error={errors?.regularPrice?.message}>
+        <Input
+          type="number"
+          id="regularPrice"
+          disabled={isCreating}
+          {...register("regularPrice", {
+            required: "این فیلد الزامی است",
+            min: {
+              value: 1,
+              message: "حداقل قیمت باید 1 باشد",
+            },
+          })}
+        />
       </FormRow>
 
-      <FormRow>
-        <Label htmlFor="discount">تخفیف</Label>
+      <FormRow label="تخفیف" error={errors?.discount?.message}>
         <Input
           type="number"
           id="discount"
-          defaultValue={0}
-          {...register("discount")}
+          disabled={isCreating}
+          {...register("discount", {
+            valueAsNumber: true,
+            required: "این فیلد الزامی است",
+            validate: (value) =>
+              value <= getValues("regularPrice") ||
+              "نخفیف بیش از قیمت اصلی مجاز نیست",
+          })}
         />
       </FormRow>
 
-      <FormRow>
-        <Label htmlFor="description">توضیحات</Label>
+      <FormRow label="توضیحات" error={errors?.description?.message}>
         <Textarea
-          type="number"
+          type="text"
           id="description"
+          disabled={isCreating}
           defaultValue=""
-          {...register("description")}
+          {...register("description", { required: "این فیلد الزامی است" })}
         />
       </FormRow>
 
-      <FormRow>
-        <Label htmlFor="image">عکس اتاق</Label>
+      <FormRow label="اضافه کردن عکس اتاق">
         <FileInput id="image" accept="image/*" />
       </FormRow>
 
