@@ -1,5 +1,3 @@
-import styled from "styled-components";
-
 import Input from "../../ui/Input";
 import Form from "../../ui/Form";
 import Button from "../../ui/Button";
@@ -11,47 +9,10 @@ import { createCabin } from "../../services/apiCabins";
 import toast from "react-hot-toast";
 import FormRow from "../../ui/FormRow";
 
-const FormRow2 = styled.div`
-  display: grid;
-  align-items: center;
-  grid-template-columns: 24rem 1fr 1.2fr;
-  gap: 2.4rem;
-
-  padding: 1.2rem 0;
-
-  &:first-child {
-    padding-top: 0;
-  }
-
-  &:last-child {
-    padding-bottom: 0;
-  }
-
-  &:not(:last-child) {
-    border-bottom: 1px solid var(--color-grey-100);
-  }
-
-  &:has(button) {
-    display: flex;
-    justify-content: flex-end;
-    gap: 1.2rem;
-  }
-`;
-
-const Label = styled.label`
-  font-weight: 500;
-`;
-
-const Error = styled.span`
-  font-size: 1.4rem;
-  color: var(--color-red-700);
-`;
-
 function CreateCabinForm() {
   const { register, handleSubmit, reset, getValues, formState } = useForm();
   const queryClient = useQueryClient();
   const { errors } = formState;
-
   const { isPending: isCreating, mutate } = useMutation({
     mutationFn: createCabin,
     onSuccess: () => {
@@ -68,12 +29,8 @@ function CreateCabinForm() {
     mutate(data);
   }
 
-  function onError(errors) {
-    console.log(errors);
-  }
-
   return (
-    <Form onSubmit={handleSubmit(onSubmit, onError)}>
+    <Form onSubmit={handleSubmit(onSubmit)}>
       <FormRow label="شماره اتاق" error={errors?.name?.message}>
         <Input
           type="text"
@@ -103,6 +60,7 @@ function CreateCabinForm() {
           disabled={isCreating}
           {...register("regularPrice", {
             required: "این فیلد الزامی است",
+            valueAsNumber: true,
             min: {
               value: 1,
               message: "حداقل قیمت باید 1 باشد",
@@ -115,6 +73,7 @@ function CreateCabinForm() {
         <Input
           type="number"
           id="discount"
+          defaultValue={0}
           disabled={isCreating}
           {...register("discount", {
             valueAsNumber: true,
@@ -130,8 +89,8 @@ function CreateCabinForm() {
         <Textarea
           type="text"
           id="description"
-          disabled={isCreating}
           defaultValue=""
+          disabled={isCreating}
           {...register("description", { required: "این فیلد الزامی است" })}
         />
       </FormRow>
@@ -145,9 +104,7 @@ function CreateCabinForm() {
         <Button $variation="secondary" type="reset">
           لغو
         </Button>
-        <Button onClick={() => onSubmit} disabled={isCreating}>
-          اضافه کردن کابین
-        </Button>
+        <Button disabled={isCreating}>اضافه کردن کابین</Button>
       </FormRow>
     </Form>
   );
