@@ -1,4 +1,4 @@
-import supabase from "./supabase";
+import supabase, { supabaseUrl } from "./supabase";
 export async function getCabins() {
   const { data, error } = await supabase.from("cabins").select("*");
   if (error) {
@@ -9,14 +9,34 @@ export async function getCabins() {
 }
 
 export async function createCabin(newCabin) {
+  const imageName = `${Math.random()}-${newCabin.image.name}`.replaceAll(
+    "/",
+    ""
+  );
+  const imagePath = `${supabaseUrl}/storage/v1/object/public/cabin-images/${imageName}`;
+
+  // https://sosqovyhxvsonxjqimje.supabase.co/storage/v1/object/public/cabin-images/cabin-001.jpg
+
+  // 1.Creating cabin
   const { data, error } = await supabase
     .from("cabins")
-    .insert([newCabin])
+    .insert([{ ...newCabin, image: imagePath }])
     .select();
 
   if (error) {
     console.log(error);
     throw new Error("عدم موفقیت در اضافه کردن کابین");
+  }
+
+  // 2.Upload Image
+  const { error: storageError } = await supabase.storage
+    .from("cabin-images")
+    .upload(imageName, newCabin.image);
+  if (storageError) {
+    // 3.Delete The Cabin IF There was ana error Uploading image
+    await supabase.from("cabins").delete().eq("id", data.id);
+    console.log(storageError);
+    throw new Error("تصویر کابین آپلود نشد و کابین ایجاد نشد.");
   }
   return data;
 }

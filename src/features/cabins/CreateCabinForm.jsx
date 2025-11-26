@@ -26,7 +26,7 @@ function CreateCabinForm() {
   });
 
   function onSubmit(data) {
-    mutate(data);
+    mutate({ ...data, image: data.image[0] });
   }
 
   return (
@@ -95,8 +95,12 @@ function CreateCabinForm() {
         />
       </FormRow>
 
-      <FormRow label="اضافه کردن عکس اتاق">
-        <FileInput id="image" accept="image/*" />
+      <FormRow label="اضافه کردن عکس اتاق" error={errors?.image?.message}>
+        <FileInput
+          id="image"
+          accept="image/*"
+          {...register("image", { required: "این فیلد الزامی است" })}
+        />
       </FormRow>
 
       <FormRow>
