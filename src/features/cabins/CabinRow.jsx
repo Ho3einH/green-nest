@@ -73,9 +73,12 @@ function CabinRow({ cabin }) {
       <div>حداکثر ظرفیت {maxCapacity} نفر</div>
       <Price>{regularPrice}</Price>
       <Discount>{discount}</Discount>
-      <button onClick={() => mutate(cabinID)} disabled={isDeleting}>
-        حذف
-      </button>
+      <div>
+        <button>ویرایش</button>
+        <button onClick={() => mutate(cabinID)} disabled={isDeleting}>
+          حذف
+        </button>
+      </div>
     </TableRow>
   );
 }
