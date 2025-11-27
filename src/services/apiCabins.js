@@ -15,11 +15,16 @@ export async function createCabin(newCabin) {
   );
   const imagePath = `${supabaseUrl}/storage/v1/object/public/cabin-images/${imageName}`;
 
-  // 1.Creating cabin
-  const { data, error } = await supabase
-    .from("cabins")
-    .insert([{ ...newCabin, image: imagePath }])
-    .select();
+  // 1.Creating/Editing cabin
+  let query = supabase.from("cabins");
+  // A) CREATE
+  query = query.insert([{ ...newCabin, image: imagePath }]);
+  // B) EDIT
+  // query = query
+  //   .update({ other_column: "otherValue" })
+  //   .eq("some_column", "someValue");
+
+  const { data, error } = await query.select().single();
 
   if (error) {
     console.log(error);

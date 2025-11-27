@@ -11,10 +11,15 @@ import FormRow from "../../ui/FormRow";
 import { useForm } from "react-hook-form";
 import { useCreateCabin } from "./useCreateCabin";
 
-function CreateCabinForm() {
+function CreateCabinForm({ cabinToEdit = {} }) {
+  console.log(cabinToEdit);
   const { isCreating, createCabin } = useCreateCabin();
+  const { id: editId, ...edittValues } = cabinToEdit;
+  const isEditSession = Boolean(editId);
 
-  const { register, handleSubmit, reset, getValues, formState } = useForm();
+  const { register, handleSubmit, reset, getValues, formState } = useForm({
+    defaultValues: isEditSession ? edittValues : {},
+  });
 
   const { errors } = formState;
 
