@@ -8,21 +8,23 @@ export async function getCabins() {
   return data;
 }
 
-export async function createCabin(newCabin) {
+export async function createEditCabin(newCabin, id) {
+  const hasImagePath = newCabin.image?.startsWith?.(supabaseUrl);
+
   const imageName = `${Math.random()}-${newCabin.image.name}`.replaceAll(
     "/",
     ""
   );
-  const imagePath = `${supabaseUrl}/storage/v1/object/public/cabin-images/${imageName}`;
+  const imagePath = hasImagePath
+    ? newCabin?.image
+    : `${supabaseUrl}/storage/v1/object/public/cabin-images/${imageName}`;
 
   // 1.Creating/Editing cabin
   let query = supabase.from("cabins");
   // A) CREATE
-  query = query.insert([{ ...newCabin, image: imagePath }]);
+  if (!id) query = query.insert([{ ...newCabin, image: imagePath }]);
   // B) EDIT
-  // query = query
-  //   .update({ other_column: "otherValue" })
-  //   .eq("some_column", "someValue");
+  if (id) query = query.update({ ...newCabin, image: imagePath }).eq("id", id);
 
   const { data, error } = await query.select().single();
 
@@ -30,6 +32,8 @@ export async function createCabin(newCabin) {
     console.log(error);
     throw new Error("عدم موفقیت در اضافه کردن کابین");
   }
+
+  if (hasImagePath) return data;
 
   // 2.Upload Image
   const { error: storageError } = await supabase.storage
