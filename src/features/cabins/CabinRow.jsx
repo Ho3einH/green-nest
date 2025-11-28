@@ -48,6 +48,7 @@ const Discount = styled.div`
 function CabinRow({ cabin }) {
   const [showForm, setShowForm] = useState(false);
   const { isDeleting, deleteCabin } = useDeleteCabin();
+  const { isCreating, createCabin } = useCreateCabin();
 
   const {
     id: cabinID,
@@ -59,11 +60,9 @@ function CabinRow({ cabin }) {
     description,
   } = cabin;
 
-  const { isCreating, createCabin } = useCreateCabin();
-
   function handleDuplicate() {
     createCabin({
-      name: `Copy of ${name}`,
+      name: `کپی از ${name}`,
       maxCapacity,
       regularPrice,
       discount,

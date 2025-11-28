@@ -3,7 +3,7 @@ export async function getCabins() {
   const { data, error } = await supabase.from("cabins").select("*");
   if (error) {
     console.log(error.message);
-    throw new Error("Cabin could not be loaded");
+    throw new Error("بارگذاری اطلاعات کابین‌ها با خطا مواجه شد.");
   }
   return data;
 }
