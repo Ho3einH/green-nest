@@ -1,17 +1,20 @@
 import supabase, { supabaseUrl } from "./supabase";
+
 export async function getCabins() {
   const { data, error } = await supabase.from("cabins").select("*");
+
   if (error) {
     console.log(error.message);
     throw new Error("بارگذاری اطلاعات کابین‌ها با خطا مواجه شد.");
   }
+
   return data;
 }
 
 export async function createEditCabin(newCabin, id) {
   const hasImagePath = newCabin.image?.startsWith?.(supabaseUrl);
 
-  const imageName = `${Math.random()}-${newCabin.image.name}`.replaceAll(
+  const imageName = `${Math.random()}-${newCabin?.image?.name}`.replaceAll(
     "/",
     ""
   );
@@ -21,8 +24,10 @@ export async function createEditCabin(newCabin, id) {
 
   // 1.Creating/Editing cabin
   let query = supabase.from("cabins");
+
   // A) CREATE
   if (!id) query = query.insert([{ ...newCabin, image: imagePath }]);
+
   // B) EDIT
   if (id) query = query.update({ ...newCabin, image: imagePath }).eq("id", id);
 
@@ -33,18 +38,20 @@ export async function createEditCabin(newCabin, id) {
     throw new Error("عدم موفقیت در اضافه کردن کابین");
   }
 
+  // 2.Upload Image
   if (hasImagePath) return data;
 
-  // 2.Upload Image
   const { error: storageError } = await supabase.storage
     .from("cabin-images")
-    .upload(imageName, newCabin.image);
+    .upload(imageName, newCabin?.image);
+
+  // 3.Delete The Cabin IF There was ana error Uploading image
   if (storageError) {
-    // 3.Delete The Cabin IF There was ana error Uploading image
     await supabase.from("cabins").delete().eq("id", data.id);
     console.log(storageError);
     throw new Error("تصویر کابین آپلود نشد و کابین ایجاد نشد.");
   }
+
   return data;
 }
 
@@ -55,5 +62,6 @@ export async function deleteCabin(id) {
     console.log(error);
     throw new Error("عدم موفقیت در حذف کابین");
   }
+
   return data;
 }
