@@ -4,16 +4,16 @@ import Button from "../../ui/Button";
 import CreateCabinForm from "./CreateCabinForm";
 
 function AddCabin() {
-  const [isShowModal, setIsShowModal] = useState(false);
+  const [isOpenModal, setIsOpenModal] = useState(false);
 
   return (
     <div>
-      <Button onClick={() => setIsShowModal((show) => !show)}>
+      <Button onClick={() => setIsOpenModal((show) => !show)}>
         اضافه کردن کابین ناوبری
       </Button>
-      {isShowModal && (
-        <Modal onClose={() => setIsShowModal(false)}>
-          <CreateCabinForm onCloseModal={() => setIsShowModal(false)} />
+      {isOpenModal && (
+        <Modal onClose={() => setIsOpenModal(false)}>
+          <CreateCabinForm onCloseModal={() => setIsOpenModal(false)} />
         </Modal>
       )}
     </div>
