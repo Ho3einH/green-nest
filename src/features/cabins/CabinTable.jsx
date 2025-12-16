@@ -3,6 +3,7 @@ import Spinner from "../../ui/Spinner";
 import CabinRow from "./CabinRow";
 import { useCabins } from "./useCabins";
 import Table from "../../ui/Table";
+import Menus from "../../ui/Menus";
 
 /* const Table = styled.div`
   border: 1px solid var(--color-grey-200);
@@ -36,21 +37,23 @@ function CabinTable() {
   } else if (error) throw new Error("Cabins can't be Loaded");
 
   return (
-    <Table $columns="0.6fr 1.8fr 2.2fr 1fr 1fr 1fr">
-      <Table.Header role="row">
-        <div></div>
-        <div>اتاق</div>
-        <div>ظرفیت</div>
-        <div>قیمت</div>
-        <div>تخفیف</div>
-        <div></div>
-      </Table.Header>
+    <Menus>
+      <Table $columns="0.6fr 1.8fr 2.2fr 1fr 1fr 1fr">
+        <Table.Header role="row">
+          <div></div>
+          <div>اتاق</div>
+          <div>ظرفیت</div>
+          <div>قیمت</div>
+          <div>تخفیف</div>
+          <div></div>
+        </Table.Header>
 
-      <Table.Body
-        data={cabins}
-        render={(cabin) => <CabinRow cabin={cabin} key={cabin.id} />}
-      />
-    </Table>
+        <Table.Body
+          data={cabins}
+          render={(cabin) => <CabinRow cabin={cabin} key={cabin.id} />}
+        />
+      </Table>
+    </Menus>
   );
 }
 
