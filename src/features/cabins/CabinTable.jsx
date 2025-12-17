@@ -33,17 +33,17 @@ const TableHeader = styled.header`
 function CabinTable() {
   const { isLoading, cabins, error } = useCabins();
   const [searchParams] = useSearchParams();
-  const currentFilter = searchParams.get("discount") || "all";
+  const filterValue = searchParams.get("discount") || "all";
 
   if (isLoading) {
     return <Spinner />;
   } else if (error) throw new Error("Cabins can't be Loaded");
 
   let filteredCabin;
-  if (currentFilter === "all") filteredCabin = cabins;
-  if (currentFilter === "no-discount")
+  if (filterValue === "all") filteredCabin = cabins;
+  if (filterValue === "no-discount")
     filteredCabin = cabins.filter((cabin) => cabin.discount === 0);
-  if (currentFilter === "with-discount")
+  if (filterValue === "with-discount")
     filteredCabin = cabins.filter((cabin) => cabin.discount > 0);
 
   return (
