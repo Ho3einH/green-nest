@@ -4,6 +4,7 @@ import { useDeleteCabin } from "./useDeletCabin";
 import { useCreateCabin } from "./useCreateCabin";
 import { HiSquare2Stack, HiTrash } from "react-icons/hi2";
 import { HiPencil } from "react-icons/hi";
+import { formatCurrency } from "../../utils/helpers";
 import Modal from "../../ui/Modal";
 import ConfirmDelete from "../../ui/ConfirmDelete";
 import Table from "../../ui/Table";
@@ -79,8 +80,12 @@ function CabinRow({ cabin }) {
         <Img src={image} alt="" />
         <Cabin>{name}</Cabin>
         <div>حداکثر ظرفیت {maxCapacity} نفر</div>
-        <Price>{regularPrice}</Price>
-        {discount ? <Discount>{discount}</Discount> : <span>&mdash;</span>}
+        <Price>{formatCurrency(regularPrice)}</Price>
+        {discount ? (
+          <Discount>{formatCurrency(discount)}</Discount>
+        ) : (
+          <span>&mdash;</span>
+        )}
         <div>
           <Menus.Menu>
             <Menus.Toggle id={cabinId} />

@@ -1,5 +1,5 @@
-function Empty({ resource }) {
-  return <p>No {resource} could be found.</p>;
+function Empty({ resourceName }) {
+  return <p>هیچ {resourceName}ی پیدا نشد . </p>;
 }
 
 export default Empty;

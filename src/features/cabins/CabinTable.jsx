@@ -37,7 +37,8 @@ function CabinTable() {
 
   if (isLoading) {
     return <Spinner />;
-  } else if (error) throw new Error("Cabins can't be Loaded");
+  } else if (error) throw new Error("عدم موفقیت در بارگزاری اطلاعات");
+  if (!cabins.length) return <Empty resourceName="رزرو" />;
 
   /* Filter */
 
