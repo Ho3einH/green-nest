@@ -8,22 +8,22 @@ function BookingTableOperations() {
       <Filter
         filterField="status"
         options={[
-          { value: "all", label: "All" },
-          { value: "checked-out", label: "Checked out" },
-          { value: "checked-in", label: "Checked in" },
-          { value: "unconfirmed", label: "Unconfirmed" },
+          { value: "all", label: "همه" },
+          { value: "checked-out", label: " افراد خارج  شده" },
+          { value: "checked-in", label: " افراد وارد  شده" },
+          { value: "unconfirmed", label: " افراد تأیید نشده" },
         ]}
       />
 
       <SortBy
         options={[
-          { value: "startDate-desc", label: "Sort by date (recent first)" },
-          { value: "startDate-asc", label: "Sort by date (earlier first)" },
+          { value: "startDate-desc", label: "جدیدترین رزروها" },
+          { value: "startDate-asc", label: "قدیمی‌ترین رزروها" },
           {
             value: "totalPrice-desc",
-            label: "Sort by amount (high first)",
+            label: "گران‌ترین رزروها",
           },
-          { value: "totalPrice-asc", label: "Sort by amount (low first)" },
+          { value: "totalPrice-asc", label: "ارزان‌ترین رزروها" },
         ]}
       />
     </TableOperations>
