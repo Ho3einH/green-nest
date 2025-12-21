@@ -138,14 +138,14 @@ function Uploader() {
         gap: "8px",
       }}
     >
-      <h3>SAMPLE DATA</h3>
+      <h3>داده های نمونه</h3>
 
       <Button onClick={uploadAll} disabled={isLoading}>
-        Upload ALL
+        آپلود همه
       </Button>
 
       <Button onClick={uploadBookings} disabled={isLoading}>
-        Upload bookings ONLY
+        آپلود رزرو ها فقط
       </Button>
     </div>
   );
