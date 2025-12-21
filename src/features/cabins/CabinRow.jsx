@@ -96,7 +96,7 @@ function CabinRow({ cabin }) {
                   disabled={isCreating}
                   onClick={handleDuplicate}
                 >
-                  کپی کردن
+                  کپی
                 </Menus.Button>
 
                 <Modal.Open opens={"edit"}>
