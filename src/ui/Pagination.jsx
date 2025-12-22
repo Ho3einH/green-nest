@@ -1,3 +1,5 @@
+import { HiMiniChevronLeft, HiMiniChevronRight } from "react-icons/hi2";
+import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 
 const StyledPagination = styled.div`
@@ -23,8 +25,8 @@ const Buttons = styled.div`
 
 const PaginationButton = styled.button`
   background-color: ${(props) =>
-    props.active ? " var(--color-brand-600)" : "var(--color-grey-50)"};
-  color: ${(props) => (props.active ? " var(--color-brand-50)" : "inherit")};
+    props.$active ? " var(--color-brand-600)" : "var(--color-grey-50)"};
+  color: ${(props) => (props.$active ? " var(--color-brand-50)" : "inherit")};
   border: none;
   border-radius: var(--border-radius-sm);
   font-weight: 500;
@@ -38,11 +40,11 @@ const PaginationButton = styled.button`
   transition: all 0.3s;
 
   &:has(span:last-child) {
-    padding-left: 0.4rem;
+    padding-right: 0.4rem;
   }
 
   &:has(span:first-child) {
-    padding-right: 0.4rem;
+    padding-left: 0.4rem;
   }
 
   & svg {
@@ -55,3 +57,59 @@ const PaginationButton = styled.button`
     color: var(--color-brand-50);
   }
 `;
+
+const PAGE_SIZE = 10;
+function Pagination({ count }) {
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const currentPage = !searchParams.get("page")
+    ? 1
+    : Number(searchParams.get("page"));
+
+  const pageCount = Math.ceil(count / PAGE_SIZE);
+
+  function nextPage() {
+    const next = currentPage === pageCount ? currentPage : currentPage + 1;
+
+    searchParams.set("page", next);
+    setSearchParams(searchParams);
+  }
+  function prevPage() {
+    const prev = currentPage === 1 ? currentPage : currentPage - 1;
+
+    searchParams.set("page", prev);
+    setSearchParams(searchParams);
+  }
+
+  return (
+    <StyledPagination>
+      <P>
+        نمایش
+        <span> {(currentPage - 1) * PAGE_SIZE + 1} </span> تا
+        <span>
+          {" "}
+          {currentPage === pageCount ? count : currentPage * PAGE_SIZE}{" "}
+        </span>
+        از
+        <span> {count} </span> رزرو
+      </P>
+
+      <Buttons>
+        <PaginationButton
+          onClick={nextPage}
+          disabled={currentPage === pageCount}
+        >
+          <HiMiniChevronRight />
+          <span>صفحه قبلی</span>
+        </PaginationButton>
+
+        <PaginationButton onClick={prevPage} disabled={currentPage === 1}>
+          <span>صفحه بعدی</span>
+          <HiMiniChevronLeft />
+        </PaginationButton>
+      </Buttons>
+    </StyledPagination>
+  );
+}
+
+export default Pagination;

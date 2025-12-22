@@ -18,7 +18,6 @@ export function useBookings() {
   const sortByRaw = searchParams.get("sortBy") || "startDate-desc";
   const [field, direction] = sortByRaw.split("-");
   const sortBy = { field, direction };
-  console.log(sortBy);
 
   const {
     isLoading,
