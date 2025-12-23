@@ -85,6 +85,21 @@ function Pagination({ count }) {
 
   return (
     <StyledPagination>
+      <Buttons>
+        <PaginationButton
+          onClick={nextPage}
+          disabled={currentPage === pageCount}
+        >
+          <HiMiniChevronRight />
+          <span>صفحه بعدی</span>
+        </PaginationButton>
+
+        <PaginationButton onClick={prevPage} disabled={currentPage === 1}>
+          <span>صفحه قبلی</span>
+          <HiMiniChevronLeft />
+        </PaginationButton>
+      </Buttons>
+
       <P>
         نمایش
         <span> {(currentPage - 1) * PAGE_SIZE + 1} </span> تا
@@ -95,20 +110,6 @@ function Pagination({ count }) {
         از
         <span> {count} </span> رزرو
       </P>
-
-      <Buttons>
-        <PaginationButton onClick={prevPage} disabled={currentPage === 1}>
-          <HiMiniChevronRight />
-          <span>صفحه قبلی</span>
-        </PaginationButton>
-        <PaginationButton
-          onClick={nextPage}
-          disabled={currentPage === pageCount}
-        >
-          <span>صفحه بعدی</span>
-          <HiMiniChevronLeft />
-        </PaginationButton>
-      </Buttons>
     </StyledPagination>
   );
 }
