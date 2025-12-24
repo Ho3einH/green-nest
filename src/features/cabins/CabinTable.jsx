@@ -62,7 +62,7 @@ function CabinTable() {
       <Table $columns="0.6fr 1.8fr 2.2fr 1fr 1fr 1fr">
         <Table.Header role="row">
           <div></div>
-          <div>اتاق</div>
+          <div>کابین</div>
           <div>ظرفیت</div>
           <div>قیمت</div>
           <div>تخفیف</div>

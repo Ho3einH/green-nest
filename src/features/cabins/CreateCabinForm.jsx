@@ -59,7 +59,7 @@ function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
       type={onCloseModal ? "modal" : "regular"}
       onSubmit={handleSubmit(onSubmit)}
     >
-      <FormRow label="شماره اتاق" error={errors?.name?.message}>
+      <FormRow label="شماره کابین" error={errors?.name?.message}>
         <Input
           type="text"
           id="name"

@@ -25,7 +25,7 @@ const data = [
   },
   {
     id: 3,
-    name: "اتاق ها",
+    name: "کابین ها",
     page: "cabins",
     icon: <HiHomeModern />,
   },
