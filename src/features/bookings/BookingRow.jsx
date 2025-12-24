@@ -1,12 +1,12 @@
 import styled from "styled-components";
-import { format, isToday } from "date-fns";
+import { format, isToday, isBefore } from "date-fns-jalali";
 
 import Tag from "../../ui/Tag";
 import Table from "../../ui/Table";
 import Menus from "../../ui/Menus";
 
 import { formatCurrency } from "../../utils/helpers";
-import { formatDistanceFromNow } from "../../utils/helpers";
+import { formatDistanceFromNowPersian } from "../../utils/helpers";
 import { HiEye } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
 
@@ -59,6 +59,17 @@ function BookingRow({
     "checked-out": "silver",
   };
 
+  const stayDuration = isToday(new Date(endDate))
+    ? `تا امروز اقامت`
+    : `${numNights} شب اقامت `;
+
+  const stayStatus = isBefore(new Date(endDate), new Date())
+    ? ` کرده است `
+    : `میکند `;
+
+  const startDateFormatted = format(new Date(startDate), "dd MMMM yyyy");
+  const endDateFormatted = format(new Date(endDate), "dd MMMM yyyy");
+
   return (
     <Table.Row>
       <Cabin>{cabinName}</Cabin>
@@ -71,13 +82,14 @@ function BookingRow({
       <Stacked>
         <span>
           {isToday(new Date(startDate))
-            ? "Today"
-            : formatDistanceFromNow(startDate)}{" "}
-          &rarr; {numNights} night stay
+            ? "از امروز"
+            : formatDistanceFromNowPersian(startDate)}{" "}
+          &larr;{stayDuration}
+          {stayStatus}
         </span>
+
         <span>
-          {format(new Date(startDate), "MMM dd yyyy")} &mdash;{" "}
-          {format(new Date(endDate), "MMM dd yyyy")}
+          {startDateFormatted} &mdash; {endDateFormatted}
         </span>
       </Stacked>
 

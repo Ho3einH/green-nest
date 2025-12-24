@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { format, isToday } from "date-fns";
+// import { isToday as isTodayGregorian } from "date-fns";
 import {
   HiOutlineChatBubbleBottomCenterText,
   HiOutlineCheckCircle,
@@ -10,14 +10,22 @@ import {
 import DataItem from "../../ui/DataItem";
 import { Flag } from "../../ui/Flag";
 
-import { formatDistanceFromNow, formatCurrency } from "../../utils/helpers";
+// import { formatDistanceFromNow } from "../../utils/helpers";
+import {
+  formatCurrency,
+  formatDistanceFromNowPersian,
+} from "../../utils/helpers";
+
+// import from date-fns-jalali
+import {
+  format as formatJalali,
+  isToday as isTodayJalali,
+} from "date-fns-jalali";
 
 const StyledBookingDataBox = styled.section`
-  /* Box */
   background-color: var(--color-grey-0);
   border: 1px solid var(--color-grey-100);
   border-radius: var(--border-radius-md);
-
   overflow: hidden;
 `;
 
@@ -77,9 +85,9 @@ const Price = styled.div`
   margin-top: 2.4rem;
 
   background-color: ${(props) =>
-    props.isPaid ? "var(--color-green-100)" : "var(--color-yellow-100)"};
+    props.$isPaid ? "var(--color-green-100)" : "var(--color-yellow-100)"};
   color: ${(props) =>
-    props.isPaid ? "var(--color-green-700)" : "var(--color-yellow-700)"};
+    props.$isPaid ? "var(--color-green-700)" : "var(--color-yellow-700)"};
 
   & p:last-child {
     text-transform: uppercase;
@@ -101,7 +109,6 @@ const Footer = styled.footer`
   text-align: right;
 `;
 
-// A purely presentational component
 function BookingDataBox({ booking }) {
   const {
     created_at,
@@ -125,60 +132,67 @@ function BookingDataBox({ booking }) {
         <div>
           <HiOutlineHomeModern />
           <p>
-            {numNights} nights in Cabin <span>{cabinName}</span>
+            {numNights} شب در کابین <span>{cabinName}</span>
           </p>
         </div>
 
         <p>
-          {format(new Date(startDate), "EEE, MMM dd yyyy")} (
-          {isToday(new Date(startDate))
-            ? "Today"
-            : formatDistanceFromNow(startDate)}
-          ) &mdash; {format(new Date(endDate), "EEE, MMM dd yyyy")}
+          {formatJalali(new Date(startDate), "EEEE، dd MMMM yyyy")} (
+          {isTodayJalali(new Date(startDate))
+            ? "امروز"
+            : formatDistanceFromNowPersian(startDate)}
+          ) &mdash; {formatJalali(new Date(endDate), "EEEE، dd MMMM yyyy")}
         </p>
       </Header>
 
       <Section>
         <Guest>
-          {countryFlag && <Flag src={countryFlag} alt={`Flag of ${country}`} />}
-          <p>
-            {guestName} {numGuests > 1 ? `+ ${numGuests - 1} guests` : ""}
-          </p>
+          {countryFlag && <Flag src={countryFlag} alt={`پرچم ${country}`} />}
+          {
+            <p>
+              {guestName}
+              {numGuests > 1 ? ` همراه ${numGuests - 1} مهمان  ` : ""}
+            </p>
+          }
+
           <span>&bull;</span>
+
           <p>{email}</p>
+
           <span>&bull;</span>
-          <p>National ID {nationalID}</p>
+
+          <p>شماره ملی {nationalID}</p>
         </Guest>
 
         {observations && (
           <DataItem
             icon={<HiOutlineChatBubbleBottomCenterText />}
-            label="Observations"
+            label="توضیحات"
           >
             {observations}
           </DataItem>
         )}
-
-        <DataItem icon={<HiOutlineCheckCircle />} label="Breakfast included?">
-          {hasBreakfast ? "Yes" : "No"}
+        <DataItem icon={<HiOutlineCheckCircle />} label="رزرو شامل صبحانه است؟">
+          {hasBreakfast ? "بله" : "خیر"}
         </DataItem>
-
-        <Price isPaid={isPaid}>
-          <DataItem icon={<HiOutlineCurrencyDollar />} label={`Total price`}>
+        <Price $isPaid={isPaid}>
+          <DataItem icon={<HiOutlineCurrencyDollar />} label="قیمت کل">
             {formatCurrency(totalPrice)}
-
             {hasBreakfast &&
-              ` (${formatCurrency(cabinPrice)} cabin + ${formatCurrency(
+              ` (${formatCurrency(cabinPrice)} قیمت کابین + ${formatCurrency(
                 extrasPrice
-              )} breakfast)`}
+              )} قیمت صبحانه )`}
           </DataItem>
 
-          <p>{isPaid ? "Paid" : "Will pay at property"}</p>
+          <p>{isPaid ? "پرداخت شده" : "پرداخت در محل"}</p>
         </Price>
       </Section>
 
       <Footer>
-        <p>Booked {format(new Date(created_at), "EEE, MMM dd yyyy, p")}</p>
+        <p>
+          رزرو شده در{" "}
+          {formatJalali(new Date(created_at), "EEEE، dd MMMM yyyy، p")}
+        </p>
       </Footer>
     </StyledBookingDataBox>
   );
