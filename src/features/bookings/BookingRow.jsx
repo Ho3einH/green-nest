@@ -54,9 +54,9 @@ function BookingRow({
   const navigate = useNavigate();
 
   const statusToTagName = {
-    unconfirmed: "blue",
-    "checked-in": "green",
-    "checked-out": "silver",
+    "تایید-نشده": "blue",
+    "وارد-شده": "green",
+    "خارج-شده": "silver",
   };
 
   const stayDuration = isToday(new Date(endDate))
@@ -93,7 +93,7 @@ function BookingRow({
         </span>
       </Stacked>
 
-      <Tag type={statusToTagName[status]}>{status.replace("-", " ")}</Tag>
+      <Tag $type={statusToTagName[status]}>{status.replace("-", " ")}</Tag>
 
       <Amount>{formatCurrency(totalPrice)}</Amount>
       <Menus.Menu>

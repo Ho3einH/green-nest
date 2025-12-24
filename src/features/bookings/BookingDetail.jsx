@@ -28,9 +28,9 @@ function BookingDetail() {
   const { status, id: bookingId } = booking;
 
   const statusToTagName = {
-    unconfirmed: "blue",
-    "checked-in": "green",
-    "checked-out": "silver",
+    "تایید-نشده": "blue",
+    "وارد-شده": "green",
+    "خارج-شده": "silver",
   };
 
   return (
@@ -38,7 +38,7 @@ function BookingDetail() {
       <Row type="horizontal">
         <HeadingGroup>
           <Heading as="h1">رزرو #{bookingId} </Heading>
-          <Tag type={statusToTagName[status]}>{status.replace("-", " ")}</Tag>
+          <Tag $type={statusToTagName[status]}>{status.replace("-", " ")}</Tag>
         </HeadingGroup>
         <ButtonText onClick={moveBack}>&larr; Back</ButtonText>
       </Row>

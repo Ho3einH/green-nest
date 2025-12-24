@@ -9,9 +9,9 @@ function BookingTableOperations() {
         filterField="status"
         options={[
           { value: "all", label: "همه" },
-          { value: "checked-out", label: " افراد خارج  شده" },
-          { value: "checked-in", label: " افراد وارد  شده" },
-          { value: "unconfirmed", label: " افراد تأیید نشده" },
+          { value: "checked-out", label: "مهمانان خارج شده" },
+          { value: "checked-in", label: "مهمانان وارد شده" },
+          { value: "unconfirmed", label: "مهمانان تأیید نشده" },
         ]}
       />
 
