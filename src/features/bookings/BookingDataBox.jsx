@@ -176,7 +176,7 @@ function BookingDataBox({ booking }) {
           {hasBreakfast ? "بله" : "خیر"}
         </DataItem>
         <Price $isPaid={isPaid}>
-          <DataItem icon={<HiOutlineCurrencyDollar />} label="قیمت کل">
+          <DataItem /* icon={<HiOutlineCurrencyDollar />} */ label="قیمت کل">
             {formatCurrency(totalPrice)}
             {hasBreakfast &&
               ` (${formatCurrency(cabinPrice)} قیمت کابین + ${formatCurrency(
