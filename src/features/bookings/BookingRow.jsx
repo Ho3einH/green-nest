@@ -58,7 +58,12 @@ function BookingRow({
     "وارد-شده": "green",
     "خارج-شده": "silver",
   };
-
+  /*   const statusToTagName = {
+    unconfirmed: "blue",
+    "checked-in": "green",
+    "checked-out": "silver",
+  };
+ */
   const stayDuration = isToday(new Date(endDate))
     ? `تا امروز اقامت`
     : `${numNights} شب اقامت `;

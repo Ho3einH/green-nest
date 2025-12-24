@@ -33,6 +33,12 @@ function BookingDetail() {
     "خارج-شده": "silver",
   };
 
+  /*   const statusToTagName = {
+    unconfirmed: "blue",
+    "checked-in": "green",
+    "checked-out": "silver",
+  };*/
+
   return (
     <>
       <Row type="horizontal">

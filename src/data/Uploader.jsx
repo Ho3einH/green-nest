@@ -69,11 +69,13 @@ async function createBookings() {
       !isToday(new Date(booking.endDate))
     )
       status = "خارج-شده";
+    // status = "checked-out";
     if (
       isFuture(new Date(booking.startDate)) ||
       isToday(new Date(booking.startDate))
     )
       status = "تایید-نشده";
+    // status = "unconfirmed";
     if (
       (isFuture(new Date(booking.endDate)) ||
         isToday(new Date(booking.endDate))) &&
@@ -81,6 +83,7 @@ async function createBookings() {
       !isToday(new Date(booking.startDate))
     )
       status = "وارد-شده";
+    // status = "checked-in";
 
     return {
       ...booking,
