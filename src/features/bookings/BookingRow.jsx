@@ -9,6 +9,7 @@ import { formatCurrency } from "../../utils/helpers";
 import { formatDistanceFromNowPersian } from "../../utils/helpers";
 import { HiEye } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
+import { HiArrowDownOnSquare } from "react-icons/hi2";
 
 const Cabin = styled.div`
   font-size: 1.6rem;
@@ -109,6 +110,12 @@ function BookingRow({
             onClick={() => navigate(`/bookings/${bookingId}`)}
           >
             نمایش جزئیات
+          </Menus.Button>{" "}
+          <Menus.Button
+            icon={<HiArrowDownOnSquare />}
+            onClick={() => navigate(`/checkin/${bookingId}`)}
+          >
+            ثبت ورود
           </Menus.Button>
         </Menus.List>
       </Menus.Menu>
