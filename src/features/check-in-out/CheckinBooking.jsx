@@ -12,6 +12,8 @@ import { useMoveBack } from "../../hooks/useMoveBack";
 import { useBooking } from "../bookings/useBooking";
 import { useEffect, useState } from "react";
 import Spinner from "../../ui/Spinner";
+import { useCheckin } from "./useCheckin";
+import { formatCurrency } from "../../utils/helpers";
 
 const Box = styled.div`
   /* Box */
@@ -24,6 +26,7 @@ const Box = styled.div`
 function CheckinBooking() {
   const [confirmPaid, setConfirmPaid] = useState(false);
   const { booking, isLoading } = useBooking();
+  const { checkin, checkingIn } = useCheckin();
 
   useEffect(() => setConfirmPaid(() => booking?.isPaid ?? false), [booking]);
 
@@ -40,7 +43,10 @@ function CheckinBooking() {
     numNights,
   } = booking;
 
-  function handleCheckin() {}
+  function handleCheckin() {
+    if (!confirmPaid) return;
+    checkin(bookingId);
+  }
 
   return (
     <>
@@ -54,17 +60,21 @@ function CheckinBooking() {
       <Box>
         <Checkbox
           checked={confirmPaid}
-          disabled={confirmPaid}
+          disabled={confirmPaid || checkingIn}
           onChange={() => setConfirmPaid((confirm) => !confirm)}
           id="confirm"
-        />
+        >
+          من تأیید می‌کنم که <b>{guests.fullName}</b>
+          مبلغ کل <b>{formatCurrency(totalPrice)}</b>
+          را پرداخت کرده است.
+        </Checkbox>
       </Box>
 
       <ButtonGroup>
         <Button $variation="secondary" onClick={moveBack}>
           بازگشت
         </Button>
-        <Button onClick={handleCheckin} disabled={!confirmPaid}>
+        <Button onClick={handleCheckin} disabled={!confirmPaid || checkingIn}>
           ثبت ورود رزرو شماره #{bookingId}
         </Button>
       </ButtonGroup>
