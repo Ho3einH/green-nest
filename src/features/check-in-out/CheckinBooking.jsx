@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 import Spinner from "../../ui/Spinner";
 import { useCheckin } from "./useCheckin";
 import { formatCurrency } from "../../utils/helpers";
+import { useSettings } from "../settings/useSettings";
 
 const Box = styled.div`
   /* Box */
@@ -25,14 +26,18 @@ const Box = styled.div`
 
 function CheckinBooking() {
   const [confirmPaid, setConfirmPaid] = useState(false);
+  const [addBreakfast, setAddBreakfast] = useState(false);
   const { booking, isLoading } = useBooking();
   const { checkin, checkingIn } = useCheckin();
+  const { settings, isLoadingSettings } = useSettings();
+
+  console.log(settings);
 
   useEffect(() => setConfirmPaid(() => booking?.isPaid ?? false), [booking]);
 
   const moveBack = useMoveBack();
 
-  if (isLoading) return <Spinner />;
+  if (isLoading || isLoadingSettings) return <Spinner />;
 
   const {
     id: bookingId,
@@ -42,6 +47,8 @@ function CheckinBooking() {
     hasBreakfast,
     numNights,
   } = booking;
+
+  const optionalBrakfastPrice = settings.breakfastPrice * numNights * numGuests;
 
   function handleCheckin() {
     if (!confirmPaid) return;
@@ -57,6 +64,21 @@ function CheckinBooking() {
 
       <BookingDataBox booking={booking} />
 
+      {!hasBreakfast && (
+        <Box>
+          <Checkbox
+            onChange={() => {
+              setAddBreakfast((prev) => !prev);
+              setConfirmPaid(false);
+            }}
+            id="brakfast"
+          >
+            آیا میخواهید صبحانه را به قیمت{" "}
+            <b>{formatCurrency(settings.breakfastPrice)}</b> اضافه کنید ؟
+          </Checkbox>
+        </Box>
+      )}
+
       <Box>
         <Checkbox
           checked={confirmPaid}
@@ -65,7 +87,17 @@ function CheckinBooking() {
           id="confirm"
         >
           من تأیید می‌کنم که <b>{guests.fullName}</b>
-          مبلغ کل <b>{formatCurrency(totalPrice)}</b>
+          مبلغ کل{" "}
+          {addBreakfast ? (
+            <b>
+              {`  (${formatCurrency(totalPrice)} + ${formatCurrency(
+                optionalBrakfastPrice
+              )}) `}
+              = {formatCurrency(totalPrice + optionalBrakfastPrice)}
+            </b>
+          ) : (
+            <b>{formatCurrency(totalPrice)}</b>
+          )}
           را پرداخت کرده است.
         </Checkbox>
       </Box>
