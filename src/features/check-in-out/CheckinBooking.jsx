@@ -31,8 +31,6 @@ function CheckinBooking() {
   const { checkin, checkingIn } = useCheckin();
   const { settings, isLoadingSettings } = useSettings();
 
-  console.log(settings);
-
   useEffect(() => setConfirmPaid(() => booking?.isPaid ?? false), [booking]);
 
   const moveBack = useMoveBack();
@@ -81,20 +79,21 @@ function CheckinBooking() {
 
       <BookingDataBox booking={booking} />
 
-      {!hasBreakfast && (
-        <Box>
-          <Checkbox
-            onChange={() => {
-              setAddBreakfast((prev) => !prev);
-              setConfirmPaid(false);
-            }}
-            id="brakfast"
-          >
-            آیا میخواهید صبحانه را به قیمت{" "}
-            <b>{formatCurrency(settings.breakfastPrice)}</b> اضافه کنید ؟
-          </Checkbox>
-        </Box>
-      )}
+      {hasBreakfast ||
+        (status !== "خارج-شده" && (
+          <Box>
+            <Checkbox
+              onChange={() => {
+                setAddBreakfast((prev) => !prev);
+                setConfirmPaid(false);
+              }}
+              id="brakfast"
+            >
+              آیا میخواهید صبحانه را به قیمت{" "}
+              <b>{formatCurrency(optionalBrakfastPrice)}</b> اضافه کنید ؟
+            </Checkbox>
+          </Box>
+        ))}
 
       <Box>
         <Checkbox
