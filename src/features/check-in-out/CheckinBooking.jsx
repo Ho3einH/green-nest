@@ -41,6 +41,7 @@ function CheckinBooking() {
 
   const {
     id: bookingId,
+    status,
     guests,
     totalPrice,
     numGuests,
@@ -49,10 +50,26 @@ function CheckinBooking() {
   } = booking;
 
   const optionalBrakfastPrice = settings.breakfastPrice * numNights * numGuests;
+  const disableCheckinCondition =
+    confirmPaid === false ||
+    checkingIn ||
+    status === "خارج-شده" ||
+    (status === "وارد-شده" && addBreakfast === false);
 
   function handleCheckin() {
     if (!confirmPaid) return;
-    checkin(bookingId);
+    if (addBreakfast) {
+      checkin({
+        bookingId,
+        breakfast: {
+          hasBreakfast: true,
+          extrasPrice: optionalBrakfastPrice,
+          totalPrice: totalPrice + optionalBrakfastPrice,
+        },
+      });
+    } else {
+      checkin({ bookingId, breakfast: {} });
+    }
   }
 
   return (
@@ -106,7 +123,7 @@ function CheckinBooking() {
         <Button $variation="secondary" onClick={moveBack}>
           بازگشت
         </Button>
-        <Button onClick={handleCheckin} disabled={!confirmPaid || checkingIn}>
+        <Button onClick={handleCheckin} disabled={disableCheckinCondition}>
           ثبت ورود رزرو شماره #{bookingId}
         </Button>
       </ButtonGroup>
