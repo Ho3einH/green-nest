@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 export function useCheckin() {
   const queryClien = useQueryClient();
   const navigate = useNavigate();
-  const { mutate: checkin, isLoadding: checkingIn } = useMutation({
+  const { mutate: checkin, isPending: isCheckingIn } = useMutation({
     mutationFn: ({ bookingId, breakfast }) =>
       updateBooking(bookingId, {
         status: "وارد-شده",
@@ -14,7 +14,7 @@ export function useCheckin() {
         ...breakfast,
       }),
     onSuccess: (data) => {
-      toast.success(`ثبت ورود رزرو #${data.id}با مووفقیت انجام شد`);
+      toast.success(`ثبت ورود رزرو  #${data.id} با موفقیت انجام شد `);
       queryClien.invalidateQueries();
       navigate("/");
     },
@@ -24,5 +24,5 @@ export function useCheckin() {
     },
   });
 
-  return { checkin, checkingIn };
+  return { checkin, isCheckingIn };
 }

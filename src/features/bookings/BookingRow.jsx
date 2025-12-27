@@ -10,6 +10,7 @@ import { formatDistanceFromNowPersian } from "../../utils/helpers";
 import { HiEye } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
 import { HiArrowDownOnSquare } from "react-icons/hi2";
+import { useCheckout } from "../check-in-out/useCheckout";
 
 const Cabin = styled.div`
   font-size: 1.6rem;
@@ -52,6 +53,7 @@ function BookingRow({
     cabins: { name: cabinName },
   },
 }) {
+  const { checkout, isCheckingOut } = useCheckout();
   const navigate = useNavigate();
 
   const statusToTagName = {
@@ -110,13 +112,26 @@ function BookingRow({
             onClick={() => navigate(`/bookings/${bookingId}`)}
           >
             نمایش جزئیات
-          </Menus.Button>{" "}
-          <Menus.Button
-            icon={<HiArrowDownOnSquare />}
-            onClick={() => navigate(`/checkin/${bookingId}`)}
-          >
-            ثبت ورود
           </Menus.Button>
+
+          {status === "تایید-نشده" && (
+            <Menus.Button
+              icon={<HiArrowDownOnSquare />}
+              onClick={() => navigate(`/checkin/${bookingId}`)}
+            >
+              ثبت ورود
+            </Menus.Button>
+          )}
+
+          {status === "وارد-شده" && (
+            <Menus.Button
+              icon={<HiArrowDownOnSquare />}
+              onClick={() => checkout(bookingId)}
+              disabled={isCheckingOut}
+            >
+              ثبت خروج
+            </Menus.Button>
+          )}
         </Menus.List>
       </Menus.Menu>
     </Table.Row>

@@ -28,7 +28,7 @@ function CheckinBooking() {
   const [confirmPaid, setConfirmPaid] = useState(false);
   const [addBreakfast, setAddBreakfast] = useState(false);
   const { booking, isLoading } = useBooking();
-  const { checkin, checkingIn } = useCheckin();
+  const { checkin, isCheckingIn } = useCheckin();
   const { settings, isLoading: isLoadingSettings } = useSettings();
 
   useEffect(() => setConfirmPaid(() => booking?.isPaid ?? false), [booking]);
@@ -50,7 +50,7 @@ function CheckinBooking() {
   const optionalBrakfastPrice = settings.breakfastPrice * numNights * numGuests;
   const disableCheckinCondition =
     confirmPaid === false ||
-    checkingIn ||
+    isCheckingIn ||
     status === "خارج-شده" ||
     (status === "وارد-شده" && addBreakfast === false);
 
@@ -98,7 +98,7 @@ function CheckinBooking() {
       <Box>
         <Checkbox
           checked={confirmPaid}
-          disabled={confirmPaid || checkingIn}
+          disabled={confirmPaid || isCheckingIn}
           onChange={() => setConfirmPaid((confirm) => !confirm)}
           id="confirm"
         >
