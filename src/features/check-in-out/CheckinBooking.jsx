@@ -29,7 +29,7 @@ function CheckinBooking() {
   const [addBreakfast, setAddBreakfast] = useState(false);
   const { booking, isLoading } = useBooking();
   const { checkin, checkingIn } = useCheckin();
-  const { settings, isLoadingSettings } = useSettings();
+  const { settings, isLoading: isLoadingSettings } = useSettings();
 
   useEffect(() => setConfirmPaid(() => booking?.isPaid ?? false), [booking]);
 

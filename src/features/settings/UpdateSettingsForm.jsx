@@ -8,7 +8,7 @@ import { useUpdateSetting } from "./useUpdateSetting";
 function UpdateSettingsForm() {
   const {
     isLoading,
-    setting: {
+    settings: {
       minBookingLength,
       maxBookingLength,
       maxGuestsPerBooking,
@@ -18,14 +18,15 @@ function UpdateSettingsForm() {
 
   const { isUpdating, updateSetting } = useUpdateSetting();
 
-  if (isLoading) return <Spinner />;
-
   function handleUpdate(e, field) {
-    // const { value } = e.target;
-    if (!e.target.value) return;
+    const { value } = e.target;
+    if (!value) return;
+    console.log(value);
 
-    updateSetting({ [field]: e.target.value });
+    updateSetting({ [field]: value });
   }
+
+  if (isLoading) return <Spinner />;
 
   return (
     <Form>
