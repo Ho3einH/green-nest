@@ -3,15 +3,28 @@ import Button from "../../ui/Button";
 import Form from "../../ui/Form";
 import FormRow from "../../ui/FormRow";
 import Input from "../../ui/Input";
+import { useSignup } from "./useSignup";
 
 // Email regex: /\S+@\S+\.\S+/
 
 function SignupForm() {
-  const { register, formState, getValues, handleSubmit } = useForm();
+  const { register, formState, getValues, handleSubmit, reset } = useForm();
+  const { signup, isPending } = useSignup();
   const { errors } = formState;
 
-  function onSubmit(data) {
-    console.log(data);
+  function onSubmit({ email, fullName, password }) {
+    signup(
+      {
+        email,
+        fullName,
+        password,
+      },
+      {
+        onSettled: () => {
+          reset();
+        },
+      }
+    );
   }
 
   return (
@@ -20,6 +33,7 @@ function SignupForm() {
         <Input
           type="text"
           id="fullName"
+          disabled={isPending}
           {...register("fullName", { required: "این فیلد الزامی است" })}
         />
       </FormRow>
@@ -28,6 +42,7 @@ function SignupForm() {
         <Input
           type="email"
           id="email"
+          disabled={isPending}
           {...register("email", {
             required: "این فیلد الزامی است",
             pattern: {
@@ -39,12 +54,13 @@ function SignupForm() {
       </FormRow>
 
       <FormRow
-        label="رمز عبور (حداقل 9 کاراکتر)"
+        label="رمز عبور (حداقل 8 کاراکتر)"
         error={errors?.password?.message}
       >
         <Input
           type="password"
           id="password"
+          disabled={isPending}
           {...register("password", {
             required: "این فیلد الزامی است",
             minLength: {
@@ -59,6 +75,7 @@ function SignupForm() {
         <Input
           type="password"
           id="passwordConfirm"
+          disabled={isPending}
           {...register("passwordConfirm", {
             required: "این فیلد الزامی است",
             validate: {
