@@ -1,14 +1,30 @@
 import styled from "styled-components";
 import Logout from "../features/authentication/Logout";
+import UserAvatar from "../features/authentication/UserAvatar";
+import ButtonIcon from "./ButtonIcon";
+import { HiOutlineUser, HiUser } from "react-icons/hi2";
 
 const StyledHeaderMenu = styled.ul`
   display: flex;
+  direction: ltr;
+  align-items: center;
+  justify-content: flex-start;
   gap: 2.4rem;
 `;
 function HeaderMenu() {
   return (
     <StyledHeaderMenu>
-      <Logout />
+      <li>
+        <Logout />
+      </li>
+      <li>
+        <ButtonIcon>
+          <HiOutlineUser />
+        </ButtonIcon>
+      </li>
+      <li>
+        <UserAvatar />
+      </li>
     </StyledHeaderMenu>
   );
 }
