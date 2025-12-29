@@ -3,6 +3,7 @@ import Logout from "../features/authentication/Logout";
 import UserAvatar from "../features/authentication/UserAvatar";
 import ButtonIcon from "./ButtonIcon";
 import { HiOutlineUser, HiUser } from "react-icons/hi2";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const StyledHeaderMenu = styled.ul`
   display: flex;
@@ -12,13 +13,15 @@ const StyledHeaderMenu = styled.ul`
   gap: 2.4rem;
 `;
 function HeaderMenu() {
+  const navigate = useNavigate();
+
   return (
     <StyledHeaderMenu>
       <li>
         <Logout />
       </li>
       <li>
-        <ButtonIcon>
+        <ButtonIcon onClick={() => navigate("account")}>
           <HiOutlineUser />
         </ButtonIcon>
       </li>
