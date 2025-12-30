@@ -2,11 +2,9 @@ import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import {
   HiCalendarDays,
-  HiCog,
   HiHome,
   HiHomeModern,
   HiUserGroup,
-  HiUsers,
   HiMiniCog,
 } from "react-icons/hi2";
 
@@ -84,7 +82,7 @@ const StyledNavLink = styled(NavLink)`
   &:active svg,
   &.active:link svg,
   &.active:visited svg {
-    color: #3e5033;
+    color: var(--color-brand-600);
   }
 `;
 

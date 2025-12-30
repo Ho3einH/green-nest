@@ -3,7 +3,7 @@ import HeaderMenu from "./HeaderMenu";
 
 const StyledHeader = styled.header`
   background-color: var(--color-grey-0);
-  padding: 4.2rem 4.8rem;
+  padding: 1.2rem 4.8rem;
 `;
 
 function Header() {
