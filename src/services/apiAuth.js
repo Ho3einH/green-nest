@@ -1,4 +1,4 @@
-import supabase from "./supabase";
+import supabase, { supabaseUrl } from "./supabase";
 export async function signup({ email, fullName, password }) {
   const { data, error } = await supabase.auth.signUp({
     email,
@@ -42,4 +42,45 @@ export async function getCurrentuser() {
 export async function logout() {
   const { error } = await supabase.auth.signOut();
   if (error) throw new Error(error.message);
+}
+
+export async function updateCurrentUser({ fullName, password, avatar }) {
+  // 1. update user data
+
+  let updateData;
+
+  if (fullName) updateData = { data: { fullName } };
+  if (password) updateData = { password };
+
+  const { data, error } = await supabase.auth.updateUser(updateData);
+  if (error)
+    throw new Error(
+      error.message ===
+      "New password should be different from the old password."
+        ? "رمز عبور جدید باید با رمز عبور قبلی متفاوت باشد."
+        : error.message
+    );
+  console.log(error);
+  if (!avatar) return data;
+
+  // 2.upload user avatar
+
+  const fileName = `avatar${data.user.id}-${Math.random()}`;
+
+  const { error: storageError } = await supabase.storage
+    .from("avatars")
+    .upload(fileName, avatar);
+
+  if (storageError) throw new Error(storageError.message);
+
+  // 3.update user avatar
+  const { data: updateAvatar, error: avatarError } =
+    await supabase.auth.updateUser({
+      data: {
+        avatar: `${supabaseUrl}/storage/v1/object/public/avatars/${fileName}`,
+      },
+    });
+  if (avatarError) throw new Error(avatarError.message);
+
+  return updateAvatar;
 }

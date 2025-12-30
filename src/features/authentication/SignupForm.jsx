@@ -29,7 +29,7 @@ function SignupForm() {
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
-      <FormRow label="اسم کامل" error={errors?.fullName?.message}>
+      <FormRow label="نام کامل" error={errors?.fullName?.message}>
         <Input
           type="text"
           id="fullName"
@@ -54,7 +54,7 @@ function SignupForm() {
       </FormRow>
 
       <FormRow
-        label="رمز عبور (حداقل 8 کاراکتر)"
+        label="رمز عبور ( حداقل 8 کاراکتر )"
         error={errors?.password?.message}
       >
         <Input
@@ -71,7 +71,7 @@ function SignupForm() {
         />
       </FormRow>
 
-      <FormRow label="تکرار پسورد" error={errors?.passwordConfirm?.message}>
+      <FormRow label="تایید رمز عبور" error={errors?.passwordConfirm?.message}>
         <Input
           type="password"
           id="passwordConfirm"

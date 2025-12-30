@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Logout from "../features/authentication/Logout";
 import UserAvatar from "../features/authentication/UserAvatar";
 import ButtonIcon from "./ButtonIcon";
-import { HiOutlineUser, HiUser } from "react-icons/hi2";
+import { HiOutlineUser } from "react-icons/hi2";
 import { Navigate, useNavigate } from "react-router-dom";
 
 const StyledHeaderMenu = styled.ul`
