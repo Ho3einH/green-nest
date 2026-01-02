@@ -1,6 +1,7 @@
 import SortBy from "../../ui/SortBy";
 import Filter from "../../ui/Filter";
 import TableOperations from "../../ui/TableOperations";
+import Search from "../../ui/Search";
 
 function BookingTableOperations() {
   return (
@@ -26,6 +27,7 @@ function BookingTableOperations() {
           { value: "totalPrice-asc", label: "ارزان‌ترین رزروها" },
         ]}
       />
+      <Search searchField={"search"} placholder={"جستجوی نام مهمان . . . "} />
     </TableOperations>
   );
 }

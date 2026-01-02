@@ -59,7 +59,7 @@ const PaginationButton = styled.button`
   }
 `;
 
-function Pagination({ count }) {
+function Pagination({ count, search }) {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const currentPage = !searchParams.get("page")
@@ -83,35 +83,36 @@ function Pagination({ count }) {
 
   if (pageCount <= 1) return null;
 
-  return (
-    <StyledPagination>
-      <Buttons>
-        <PaginationButton
-          onClick={nextPage}
-          disabled={currentPage === pageCount}
-        >
-          <HiMiniChevronRight />
-          <span>صفحه بعدی</span>
-        </PaginationButton>
+  if (!search)
+    return (
+      <StyledPagination>
+        <Buttons>
+          <PaginationButton
+            onClick={nextPage}
+            disabled={currentPage === pageCount}
+          >
+            <HiMiniChevronRight />
+            <span>صفحه بعدی</span>
+          </PaginationButton>
 
-        <PaginationButton onClick={prevPage} disabled={currentPage === 1}>
-          <span>صفحه قبلی</span>
-          <HiMiniChevronLeft />
-        </PaginationButton>
-      </Buttons>
+          <PaginationButton onClick={prevPage} disabled={currentPage === 1}>
+            <span>صفحه قبلی</span>
+            <HiMiniChevronLeft />
+          </PaginationButton>
+        </Buttons>
 
-      <P>
-        نمایش
-        <span> {(currentPage - 1) * PAGE_SIZE + 1} </span> تا
-        <span>
-          {" "}
-          {currentPage === pageCount ? count : currentPage * PAGE_SIZE}{" "}
-        </span>
-        از
-        <span> {count} </span> رزرو
-      </P>
-    </StyledPagination>
-  );
+        <P>
+          نمایش
+          <span> {(currentPage - 1) * PAGE_SIZE + 1} </span> تا
+          <span>
+            {" "}
+            {currentPage === pageCount ? count : currentPage * PAGE_SIZE}{" "}
+          </span>
+          از
+          <span> {count} </span> رزرو
+        </P>
+      </StyledPagination>
+    );
 }
 
 export default Pagination;

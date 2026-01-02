@@ -8,7 +8,6 @@ export function useBookings() {
   const queryClient = useQueryClient();
 
   /* Filter */
-
   const filterValue = searchParams.get("status");
   const filter =
     !filterValue || filterValue === "all"
@@ -16,13 +15,14 @@ export function useBookings() {
       : { field: "status", value: filterValue };
 
   /* Sort */
-
   const sortByRaw = searchParams.get("sortBy") || "startDate-desc";
   const [field, direction] = sortByRaw.split("-");
   const sortBy = { field, direction };
 
-  /* Pagination */
+  /* Search */
+  const search = searchParams.get("search");
 
+  /* Pagination */
   const page = !searchParams.get("page") ? 1 : Number(searchParams.get("page"));
 
   const {
@@ -30,8 +30,8 @@ export function useBookings() {
     data: { data: bookings, count } = {},
     error,
   } = useQuery({
-    queryKey: ["bookings", filter, sortBy, page],
-    queryFn: () => getBookings({ filter, sortBy, page }),
+    queryKey: ["bookings", filter, sortBy, page, search],
+    queryFn: () => getBookings({ filter, sortBy, page, search }),
   });
 
   /* Prefetching */
@@ -39,15 +39,17 @@ export function useBookings() {
 
   if (page < pageCount)
     queryClient.prefetchQuery({
-      queryKey: ["bookings", filter, sortBy, page + 1],
-      queryFn: () => getBookings({ filter, sortBy, count, page: page + 1 }),
+      queryKey: ["bookings", filter, sortBy, page + 1, search],
+      queryFn: () =>
+        getBookings({ filter, sortBy, count, page: page + 1, search }),
     });
 
   if (page > 1)
     queryClient.prefetchQuery({
-      queryKey: ["bookings", filter, sortBy, page - 1],
-      queryFn: () => getBookings({ filter, sortBy, count, page: page - 1 }),
+      queryKey: ["bookings", filter, sortBy, page - 1, search],
+      queryFn: () =>
+        getBookings({ filter, sortBy, count, page: page - 1, search }),
     });
 
-  return { isLoading, error, count, bookings };
+  return { isLoading, error, count, bookings, search };
 }

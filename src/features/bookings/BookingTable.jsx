@@ -7,10 +7,14 @@ import Spinner from "../../ui/Spinner";
 import Pagination from "../../ui/Pagination";
 
 function BookingTable() {
-  const { bookings, isLoading, count } = useBookings();
+  const { bookings, isLoading, count, search } = useBookings();
 
   if (isLoading) return <Spinner />;
   if (!bookings?.length) return <Empty resourceName="رزرو" />;
+
+  const searchResult = bookings.filter((booking) =>
+    booking.guests.fullName?.toLowerCase().includes(search)
+  );
 
   return (
     <Menus>
@@ -26,14 +30,15 @@ function BookingTable() {
 
         {
           <Table.Body
-            data={bookings}
+            // data={bookings}
+            data={search ? searchResult : bookings}
             render={(booking) => (
               <BookingRow key={booking.id} booking={booking} />
             )}
           />
         }
         <Table.Footer>
-          <Pagination count={count} />
+          <Pagination count={count} search={search} />
         </Table.Footer>
       </Table>
     </Menus>
