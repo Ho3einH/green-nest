@@ -34,7 +34,7 @@ const Icon = styled.div`
 
 const Title = styled.h5`
   align-self: end;
-  font-size: 1.2rem;
+  font-size: 1.6rem;
   text-transform: uppercase;
   letter-spacing: 0.4px;
   font-weight: 600;
