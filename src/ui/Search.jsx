@@ -6,7 +6,7 @@ function Search({ searchField, placholder }) {
 
   function handleSearch(e) {
     e.preventDefault();
-    const value = e.target.value;
+    const value = e.target.value.toLowerCase();
 
     if (!value) searchParams.delete(searchField);
     else searchParams.set(searchField, value);
