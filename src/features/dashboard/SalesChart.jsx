@@ -64,7 +64,7 @@ function SalesChart({ bookings, numDays }) {
 
   const data = allDates.map((date) => {
     return {
-      label: format(date, "MMM dd"),
+      label: format(date, "MMMM dd"),
       totalSales: bookings
         .filter((booking) => isSameDay(date, new Date(booking.created_at)))
         .reduce((acc, cur) => acc + cur.totalPrice, 0),
@@ -89,7 +89,10 @@ function SalesChart({ bookings, numDays }) {
       };
   return (
     <StyledSalesChart>
-      <Heading as="h2">فروش ها</Heading>
+      <Heading as="h2">
+        مقادیر فروش از تاریخ {format(allDates.at(0), "dd MMM yyy")} &mdash;
+        {format(allDates.at(-1), "dd MMMM yyy")}
+      </Heading>
       <ResponsiveContainer width={"100%"} height={350}>
         <AreaChart data={data} style={{ direction: "ltr" }}>
           <XAxis
@@ -105,7 +108,7 @@ function SalesChart({ bookings, numDays }) {
           <Tooltip
             contentStyle={{
               backgroundColor: colors.background,
-              border: `1px solid ${colors.totalSales.fill}`,
+              border: `2px solid ${colors.totalSales.fill}`,
               borderRadius: "1.2rem",
             }}
           />
