@@ -15,8 +15,8 @@ export function useRecenStays() {
   });
 
   const confirmedStay = stays?.filter(
-    (stay) => stay.status === "checkd-in" || "checkd-out"
+    (stay) => stay.status === "وارد-شده" || stay.status === "خارج-شده"
   );
-
+  console.log(confirmedStay);
   return { stays, isLoading, confirmedStay, numDays };
 }

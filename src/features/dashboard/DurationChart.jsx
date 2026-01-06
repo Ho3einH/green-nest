@@ -140,8 +140,6 @@ function prepareData(startData, stays) {
     }, startData)
     .filter((obj) => obj.value > 0);
 
-  console.log(data);
-
   return data;
 }
 
