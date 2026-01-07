@@ -15,7 +15,7 @@ export function useCheckout() {
     },
 
     onError: () => {
-      toast.error(`خطا هنگام ثبت ورود لطفا دوباره تلاش کنید`);
+      toast.error(`خطا هنگام ثبت خروج لطفا دوباره تلاش کنید`);
     },
   });
 

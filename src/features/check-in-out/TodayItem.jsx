@@ -1,4 +1,10 @@
 import styled from "styled-components";
+import Tag from "../../ui/Tag";
+import { Flag } from "../../ui/Flag";
+import Button from "../../ui/Button";
+import { Link } from "react-router-dom";
+import CheckoutButton from "./CheckoutButton";
+import toast from "react-hot-toast";
 
 const StyledTodayItem = styled.li`
   display: grid;
@@ -18,3 +24,31 @@ const StyledTodayItem = styled.li`
 const Guest = styled.div`
   font-weight: 500;
 `;
+
+function TodayItem({ activity }) {
+  const { id, numNights, guests, status } = activity;
+
+  return (
+    <StyledTodayItem>
+      {status === "تایید-نشده" && <Tag $type="green">درحال رسیدن</Tag>}
+      {status === "وارد-شده" && <Tag $type="blue">درحال عزیمت</Tag>}
+
+      <Flag src={guests?.countryFlag} alt={`Flag of ${guests.country}`} />
+      <Guest>{guests?.fullName}</Guest>
+      <div> {`${numNights} شب`} </div>
+      {status === "تایید-نشده" && (
+        <Button
+          $size="small"
+          $variation="primary"
+          as={Link}
+          to={`/checkin/${id ? id : toast.error("این کاربر وجود ندارد ")}`}
+        >
+          Check in
+        </Button>
+      )}
+      {status === "وارد-شده" && <CheckoutButton bookingId={id} />}
+    </StyledTodayItem>
+  );
+}
+
+export default TodayItem;
