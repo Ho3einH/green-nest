@@ -43,7 +43,7 @@ function TodayItem({ activity }) {
           as={Link}
           to={`/checkin/${id ? id : toast.error("این کاربر وجود ندارد ")}`}
         >
-          Check in
+          ثبت ورود
         </Button>
       )}
       {status === "وارد-شده" && <CheckoutButton bookingId={id} />}
