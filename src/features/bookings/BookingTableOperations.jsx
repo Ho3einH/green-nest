@@ -27,7 +27,7 @@ function BookingTableOperations() {
           { value: "totalPrice-asc", label: "ارزان‌ترین رزروها" },
         ]}
       />
-      <Search searchField={"search"} placholder={"جستجوی نام مهمان . . . "} />
+      <Search />
     </TableOperations>
   );
 }
