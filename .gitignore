@@ -31,3 +31,4 @@ node_modules/
 # Optional: OS files
 Thumbs.db
 Desktop.ini
+node_modules
