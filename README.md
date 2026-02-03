@@ -13,6 +13,7 @@ This project was developed as a real-world practice application with production-
 <https://green-nest-rosy.vercel.app/>
 
 >⚠️ attention : this is only for pc screen and devices with higher than 1300px width.
+
 > ⚠️ This application is intended for admin use only.
 
 ---
